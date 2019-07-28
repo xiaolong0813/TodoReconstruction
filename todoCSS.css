@@ -1,0 +1,400 @@
+/*响应式页面，当宽度小于750时进行样式修改*/
+@media all and (max-width: 750px){
+    header {
+        text-align: center;
+    }
+    nav {
+        display: none;
+    }
+    aside {
+        display: none;
+    }
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: "Microsoft YaHei";
+    overflow-x: hidden;
+}
+
+header {
+    flex: 0 0 2.5em;
+    width: 100%;
+    line-height: 2.5em;
+    background-color: #336699;
+    padding-left: 20px;
+    z-index: 100;
+    font-family: "Microsoft YaHei";
+    color: white;
+    font-size: 1.5em;
+}
+
+.todo2-body {
+    display: flex;
+    flex: 1;
+    width: 100%;
+}
+
+/*todo-body中的整体盒模型*/
+/*nav,aside 和 main*/
+/*
+nav :   15em
+aside : 15em
+main :   1
+ */
+
+
+/*
+注意：
+1. flex会使子元素的float 、 clear 和 vertical-align 属性失效。
+2. 实现水平垂直居中：即
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+3. 父元素为flex，可以被子元素撑开
+*/
+
+
+/*盒子模型*/
+nav, aside {
+    flex: 0 0 15em;
+}
+
+main {
+    flex: 1;
+}
+
+/*
+三个盒模型 nav 和 aside 和 main：
+nav ：
+所有任务  2em
+分类列表  2em
+todo-item-container  1
+bottom  4em
+
+aside ：
+todo-buttons  4em
+task-list  1
+bottom  4em
+
+main：
+todo-titile:  4em
+todo-time:    4em
+todo-content: 1
+
+*/
+
+nav, aside{
+    display: flex;
+    flex-direction: column;
+    /*a是透明度*/
+    background-color: rgba(107,120,128, 0.5);
+    border-right: 0.6px solid grey;
+}
+
+.nav2-cell, #todo-item-all2{
+    /*flex: 0 0 2em;*/
+    line-height: 2em;
+    padding-left: 1em;
+}
+
+.todo-title2 {
+}
+
+nav .todo-item-container2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/*使用模板字符串添加的父类分类元素*/
+nav .todo-item2 {
+    display: flex;
+    flex-direction: column;
+}
+
+/*父类分类*/
+nav .todo-item-title2 {
+    flex: 1;
+    font-size: 1.2em;
+}
+nav .todo-item-title2:hover, .todo-item-child2:hover {
+    background-color: #ffffcc;
+    cursor: pointer;
+}
+
+/*激活属性*/
+nav .child-active2 {
+    background-color: #ffffcc;
+}
+
+nav .todo-item-title i,.todo-item-child i {
+    display: inline-block;
+    font-size: 1.2em;
+}
+
+nav .nav-btm2 {
+    /*flex: 0 0 4em;*/
+    background-color: rgba(42,54,61,0.44);
+    line-height: 4em;
+    text-align: center;
+}
+
+aside {
+    background-color: rgba(195,212,222,0.5);
+}
+
+aside .todo-buttons2 {
+    /*竖向占据的大小4em*/
+    flex: 0 0 4em;
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+    border-bottom: 1px dashed grey;
+}
+
+aside .todo-buttons2 button {
+    flex: 1;
+    border: none;
+    font-family: "Microsoft YaHei";
+    border-right: 0.5px solid grey;
+    font-size: 15px;
+}
+
+ /*悬停某个键，以及激活按键的状态*/
+aside .todo-buttons2 button:hover, .list-active {
+    background-color: rgba(107, 120,128,0.5);
+    cursor: pointer;
+    color: #ffffff;
+}
+
+ /*任务栏的外壳样式*/
+aside .todo-task-list2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/*插入任务栏的时间-任务组合*/
+aside .todo-task-list2 div {
+    /*flex: 0 0 2em;*/
+    line-height: 2em;
+    padding-left: 0.5em;
+}
+
+aside .todo-task-list2 .todo-task-list-time2 {
+    background-color: rgba(107,120,128,0.5);
+}
+
+aside .todo-task-list-content2:hover {
+    background-color: #ffffcc;
+    cursor: pointer;
+}
+
+aside .aside-btm2 {
+    line-height: 4em;
+    text-align: center;
+    background-color: rgba(42,54,61,0.5);
+}
+
+/*nav和aside的btm键悬停*/
+nav .nav-btm2:hover,aside .aside-btm2:hover {
+    cursor: pointer;
+    background: #eee;
+}
+
+/*nav和aside中被激活的项*/
+nav .child-active2, task-active2 {
+    background-color: #ffffcc;
+}
+
+/*主要日志页面*/
+main {
+    display: flex;
+    flex-direction: column;
+}
+/*日志题目*/
+main .todo-title2 {
+    /*flex: 0 0 4em;*/
+    line-height: 4em;
+    padding-left: 1.5em;
+    font-weight: bold;
+    background-color: rgba(107,120,128,0.3);
+}
+
+/*左边是title，右边是操作按钮，皆为inline-block 40% 50%*/
+
+main .todo-title2 span {
+    display: inline-block;
+    width: 40%;
+    font-size: 1.3em;
+    text-align: left;
+    vertical-align: middle;
+}
+
+main .todo-title2 .editAndDone2 {
+    display: inline-block;
+    width: 50%;
+    font-size: 1.8em;
+    text-align: right;
+    vertical-align: middle;
+}
+
+main .todo-title2 .editAndDone2 a:hover {
+    cursor: pointer;
+}
+
+main .todo-time2 {
+    line-height: 4em;
+    padding-left: 1.5em;
+    background-color: rgba(195,212,222,0.5);
+}
+
+main .todo-content2 {
+    flex: 1;
+    padding-top: 1em;
+    padding-left: 1em;
+}
+
+main .textarea-content2 {
+    background-color: #ffffff;
+    width: 95%;
+    height: 70%;
+    font-family: "Microsoft YaHei";
+    border: none;
+    font-size: 1em;
+    /*不允许定义尺寸*/
+    resize: none;
+}
+
+main .textarea-content2:focus {
+    outline: none;
+}
+
+main .todo-saveAndQuit2 {
+    /*float: right;*/
+    /*display: inline-block;*/
+    /*width: 80%;*/
+    padding-right: 200px;
+    margin-bottom: 50px;
+}
+
+main .todo-saveAndQuit2 button {
+    float: right;
+    width: 60px;
+    height: 40px;
+    color: #ffffcc;
+    background-color: rgba(0,81,255,0.5);
+    border:none;
+    font-family: "Microsoft YaHei";
+    margin-right: 20px;
+}
+
+main .todo-saveAndQuit2 button:hover {
+    cursor: pointer;
+}
+
+main .todo-name-input2, .todo-date-input2 {
+
+}
+
+/*弹窗样式*/
+
+/*覆盖层,初始显示为none，隐藏*/
+.cover2 {
+    display: none;
+
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+    /*background-color: black;*/
+    /*opacity: 0.5;*/
+    /*z-index: -1;*/
+
+}
+
+.mask2 {
+    position: fixed;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    top:0;
+    left:0;
+    z-index: -1;
+}
+
+.addMenu2 {
+    display: flex;
+    flex-direction: column;
+    /*居中的写法*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 350px;
+    /*height: 200px;*/
+    background-color: #ffffff;
+    z-index: 101;
+    text-align: center;
+    box-shadow: 0px 0px 30px #333333;
+}
+
+.addMenu2 .add-head2 {
+    /*flex: 0 0 30%;*/
+    background-color: lightgrey;
+    line-height: 2em;
+    border-bottom: 1px dashed grey;
+    font-size: 1.5em;
+}
+
+.addMenu2 .add-body2 {
+    background-color: lightgrey;
+    padding-top: 5px;
+    padding-left: 30px;
+    font-size: 1rem;
+    line-height: 4em;
+    text-align: left;
+    flex: 1;
+}
+
+.addMenu2 #add-input2, .addMenu2 #add-select2 {
+    width: 160px;
+    height: 24px;
+    padding-left: 5px;
+    border: 1px solid;
+    font-family: "Microsoft YaHei";
+
+    box-sizing: border-box;
+}
+
+.addMenu2 .add-foot2 {
+    font-size: 0;
+    line-height: 3em;
+}
+
+.addMenu2 .add-foot2 button {
+    width: 50%;
+    height: 3em;
+    border:none;
+    border-right: 1px solid grey;
+    font-family: "Microsoft YaHei";
+    background-color: darkgrey;
+}
+
+.addMenu2 .add-foot2 button:hover {
+    cursor: pointer;
+    background-color: #ffffff;
+}
+

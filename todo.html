@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--    <link rel="stylesheet" type="text/css" href="todo.less"/>-->
+    <meta charset="UTF-8">
+    <title>重写todo</title>
+    <link rel="stylesheet" href="todoCSS.css">
+    <link rel="stylesheet" href="https://apps.bdimg.com/libs/fontawesome/4.2.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header><i>重写Todo</i></header>
+    <div class="todo2-body">
+<!--        左侧边栏-->
+        <nav>
+            <div class="nav2-cell todo-item-child2" id="todo-item-all2"><i class="fa fa-globe"></i>
+            所有任务 (<span id="taskNum">1</span>)
+            </div>
+            <div class="nav2-cell">分类列表</div>
+            <div class="todo-item-container2">
+<!--                插入模板-->
+<!--                <div class="todo-item" data-idofitem=${newParent.id}>-->
+<!--                    <div class="todo-item-title todo-item-delete" data-idofchild=i${newParent.id}>-->
+<!--                        <span class='title-span'>-->
+<!--                        <i class="fa fa-folder-open"></i>  ${newParent.name}  (${sum})</span>-->
+<!--                        <i class="fa fa-trash-o" style='display:none'></i>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+            <div class="nav-btm2">
+                新增分类
+            </div>
+        </nav>
+<!--        中间栏-->
+        <aside>
+            <div class="todo-buttons2">
+                <button class="todo-all2 list-active">所有</button>
+                <button class="todo-undone2">未完成</button>
+                <button class="todo-done2">已完成</button>
+            </div>
+
+            <div class="todo-task-list2" data-activetask2="0">
+                <div class="todo-task-list-time2">time</div>
+                <div class="todo-task-list-content2">使用说明</div>
+
+<!--                <div class="todo-item-child todo-item-delete" data-idofchild=${newChild.id}>-->
+<!--                <span class='child-span'>-->
+<!--                <i class="fa fa-file-o"></i>  ${newChild.name}  (${sum})</span>-->
+<!--                    <i class="fa fa-trash-o" style='display:none'></i>-->
+<!--                </div>-->
+
+            </div>
+            <div class="aside-btm2">
+                <i class="fa fa-plus"></i>
+                新增任务
+            </div>
+        </aside>
+<!--        主要编辑块-->
+        <main>
+            <div class="todo-title2">
+                <span>使用说明</span>
+<!--                两个编辑按钮-->
+                <div class="editAndDone2">
+                    <a id="todo-done2"><i class="fa fa-check"></i></a>
+                    <a id="todo-edit2"><i class="fa fa-pencil"></i></a>
+                    <a id="todo-delete2"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <div class="todo-time2">
+                <span class="todo-time-note2">时间</span>
+            </div>
+            <div class="todo-content2">
+                <textarea class="textarea-content2" placeholder="请输入内容" readonly="readonly"
+                          disabled="disabled">离线应用</textarea>
+            </div>
+<!--            文本操作-->
+            <div class="todo-saveAndQuit2">
+                <button class="save2">保存</button>
+                <button class="quit2">放弃</button>
+            </div>
+        </main>
+    </div>
+
+<!--    弹窗-->
+    <div class="cover2">
+<!--        前端幕布-->
+        <div class="mask2"></div>
+        <div class="addMenu2">
+            <div class="add-head2">新增分类</div>
+            <div class="add-body2">选择主分类：
+            <select id="add-select2">
+                <option value="0">默认分类</option>
+            </select><br>
+                新分类名称：
+                <input type="text" id="add-input2">
+            </div>
+            <div class="add-foot2">
+                <button id="cancel2">取消</button>
+                <button id="ok2">确认</button>
+            </div>
+        </div>
+    </div>
+    <script src="TodoService.js"></script>
+    <script src="Nav.js"></script>
+    <script src="Aside.js"></script>
+    <script src="Main.js"></script>
+</body>
+</html>
