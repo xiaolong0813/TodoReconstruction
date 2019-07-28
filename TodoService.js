@@ -48,10 +48,20 @@ var findById = function (id, eleList) {
 
 // 删除数组中所有元素的某个class
 function clearClass(array, className) {
+    // Array.prototype.forEach.call(array, function(t){
+    //     if (t.classList.contains(className)) {
+    //         t.classList.remove(className)
+    //     }
+    // })
     array.forEach(x => {
         if (x.classList.contains(className))
             x.classList.remove(className)
     })
+}
+
+function clearOneClass(element, className) {
+    if (element.classList.contains(className))
+        element.classList.remove(className)
 }
 
 // 保存todoList到LocalStorage

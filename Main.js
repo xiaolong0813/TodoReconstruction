@@ -4,24 +4,35 @@
 // 即addEvent(element,event,func(){}.bind(this))。注意不能用call或者apply，那样会立即执行函数，bind可以
 // 只绑定但不执行
 
+// 2. $(`[data-item="parent"][data-id="${pid}"]`) 可以使用两个参数定位一个元素。
+
 
 // 主函数
 var __main = function () {
+    todoList = loadTodoList();
     // clearLocalStorage()
 
-    todoList = loadTodoList();
-    // todoList = todoList
-    let nav = new NavClass()
-    nav.bindAll()
-    nav.rendNav()
+    let content = new ContentClass()
 
-    let aside = new AsideClass(nav)
-    aside.test()
+    let aside = new AsideClass(content)
+    aside.bindAll()
+
+    let nav = new NavClass(aside)
+    nav.bindAll()
+    nav.render()
+
+
 
     // bindEvents(nav)
     // initTodoList(nav)
 }
 // 启动主函数
 
+var test =  function() {
+    [1,2,3,4].forEach(x => {
+        log(x + 1)
+    })
+}
 
 __main()
+// test()

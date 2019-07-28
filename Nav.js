@@ -9,12 +9,15 @@
 //     return $(".todo-task-list2").dataset.activetask2
 // }
 
-var NavClass = function () {
+let NavClass = function (aside) {
+    this.aside = aside;
     this.parentList = null
     this.childList = null
 
+    // activeNAVItem 的取值可以为 parent, child allItem
     this.activeNAVItem = "allItem"
     this.activeNAVID = null
+
     this.cover = $(".cover2")
     this.btm = $(".nav-btm2")
     this.select = $("#add-select2")
@@ -24,7 +27,7 @@ var NavClass = function () {
     this.taskNum = $("#taskNum")
     this.container = $(".todo-item-container2")
     this.allItem = $("#todo-item-all2")
-    this.activeItemElement = $(`[data-${this.activeNAVItem}="${this.activeNAVID}"]`)
+    // this.activeItemElement =
 }
 
 // 绑定“新增分类”按钮功能
@@ -73,12 +76,12 @@ NavClass.prototype.addParentChildData = function (selected, value) {
         var pEle = findById(selNum, todoList.parentList)
         pEle.children.push(newCID)
     }
-    this.rendNav()
+    this.render()
     // 把新的todoList 存入localStorage
     saveTodoList()
 }
 
-NavClass.prototype.rendNav = function () {
+NavClass.prototype.render = function () {
     // 重新从todoList获取数据
     this.parentList = todoList.parentList
     this.childList = todoList.childList
@@ -100,7 +103,27 @@ NavClass.prototype.rendNav = function () {
     }
 
     // 激活某个item
-    this.activeOneItemNAV()
+    this.activeOneItem()
+}
+
+// 根据全局变量 activeNAV激活某个变量,同时激活aside里面的对应项
+NavClass.prototype.activeOneItem = function() {
+    // 先删除nav中所有元素的class
+    clearOneClass(this.allItem, 'child-active2')
+    clearClass(document.querySelectorAll(".todo-item-delete2"), 'child-active2')
+
+    // 根据全局变量选取激活项
+    if (this.activeNAVItem === "allItem")
+        this.allItem.classList.add("child-active2")
+    else {
+        let item = this.getActiveItem()
+        // log(item)
+        item.classList.add("child-active2")
+    }
+    // 激活aside里面的项
+    this.aside.activeNAVItem = this.activeNAVItem
+    this.aside.activeNAVID = this.activeNAVID
+    this.aside.render()
 }
 
 // 只激活列表中的一个元素的某个属性
@@ -115,8 +138,10 @@ NavClass.prototype.getParentHTML = function(parentListElement) {
     // 如果是默认分类，不添加trash标志
     if (!(parentListElement.id === 0))
         trash = `<i class="fa fa-trash-o" style='display:none'></i>`;
-    return `<div class="todo-item2" data-parentItem=${parentListElement.id}>
-        <div class="todo-item-title2 todo-item-delete2">
+    return `<div class="todo-item2">
+        <div class="todo-item-title2 todo-item-delete2" 
+        data-item="parent"
+        data-id=${parentListElement.id}>
             <span class='title-span2'>
             <i class="fa fa-folder-open"></i>  ${parentListElement.name}  (${parentListElement.taskNum})</span>
             ${trash}
@@ -130,7 +155,9 @@ NavClass.prototype.getChildHTML = function(childListElement) {
     if (!(childListElement.id === 0))
         trash = `<i class="fa fa-trash-o" style='display:none'></i>`;
     var sum = childListElement.children.length;
-    return `<div class="todo-item-child2 todo-item-delete2" data-childItem=${childListElement.id}>
+    return `<div class="todo-item-child2 todo-item-delete2" 
+                data-item="child"
+                data-id=${childListElement.id}>
                 <span class='child-span2'>
                 <i class="fa fa-file-o"></i>  ${childListElement.name}  (${sum})</span>
                 ${trash}
@@ -150,32 +177,26 @@ NavClass.prototype.rendParentList = function(parentListElement) {
 NavClass.prototype.rendChildList = function(childListElement) {
     var t = this.getChildHTML(childListElement)
     var pid = childListElement.pid
-    // 找到插入的父类元素
-    $(`[data-parentItem="${pid}"]`).insertAdjacentHTML('beforeend', t)
+    // 找到插入的父类元素.使用data-item和data-id两个参数定位元素
+    let parentElement = $(`[data-item="parent"][data-id="${pid}"]`).closest(".todo-item2")
+    parentElement.insertAdjacentHTML('beforeend', t)
 }
 
-// 根据全局变量 activeNAV激活某个变量
-NavClass.prototype.activeOneItemNAV = function() {
-    // 先删除nav中所有元素的class
-    clearClass(document.querySelectorAll(".todo-item-child2"))
-    clearClass(document.querySelectorAll(".todo-item-title2"))
-    // 根据全局变量选取激活项
-    if (this.activeNAVItem === "allItem")
-        this.allItem.classList.add("child-active2")
-    else
-        this.activeItemElement.classList.add("child-active2")
+NavClass.prototype.getActiveItem = function () {
+    let i = $(`[data-item="${this.activeNAVItem}"][data-id="${this.activeNAVID}"]`)
+    return i
 }
 
 NavClass.prototype.itemBind = function () {
     addEvent(this.container, "click", function (e) {
         let tar = e.target
         let item = tar.closest('.todo-item-delete2')
+        // 如果可以选择，则此项肯定存在，if是为了防止选到container外面
         if (item){
-            // this.activeNAVItem =
+            this.activeNAVItem = item.dataset.item
+            this.activeNAVID = item.dataset.id
+            this.activeOneItem()
         }
-
-
-
     }.bind(this))
 
 }
@@ -191,7 +212,7 @@ NavClass.prototype.bindAll = function () {
 // 初始化，导入localStorage数据
 // function initTodoList(nav) {
 //     todoList = loadTodoList();
-//     rendNav()
+//     render()
 // }
 
 // // 绑定事件
